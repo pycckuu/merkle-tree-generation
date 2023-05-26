@@ -1,0 +1,12 @@
+{
+    "hLevel": 2,
+    "lLevel": 16,
+    "preimage": 0,
+    "root": "0x3000405fb230522361e27b76c47b69ad66586fac3788c1f35d25bcd1f5b57bda",
+    "branches": [
+        "0x21f595da09f226ec09bc274a2c3bc358670b16bdf762ce333a9b05b4ea43f009",
+        "0x0c005cdbea16533de8615665f5490da32311c0a32f22e1e353a6d9f8a44419f8",
+        "0x2fd4b719d39da0a5853ca2395f4b008303c107ac5ebedf5fdd4dbc73f75f31cb",
+        "0x2f4d6625d3a809cb22cbb6da2c936d07dd14cc2fc213a4be397e0f301a9d7340"
+    ]
+}

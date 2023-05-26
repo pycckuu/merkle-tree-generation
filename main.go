@@ -10,7 +10,7 @@ import (
 	"os"
 	"sync"
 
-	merkletree "github.com/pycckuu/merkle-tree-generation/src"
+	merkletree "github.com/pycckuu/merkle-tree-generation/multilevelmktree"
 	"github.com/schollz/progressbar/v3"
 )
 
@@ -71,7 +71,7 @@ func outputJSON(branches []*big.Int, root *big.Int, hLevel, lLevel int, preImage
 
 	// Open output file
 	fileName := fmt.Sprintf("output_hLevel_%d_lLevel_%d_preImage_%d.json", hLevel, lLevel, preImage)
-	file, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE, 0755)
+	file, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE, 0o755)
 	if err != nil {
 		log.Fatalf("error opening file: %v", err)
 	}
