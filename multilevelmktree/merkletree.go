@@ -38,14 +38,28 @@ func NewMerkleNode(left, right *MerkleNode, data *big.Int) *MerkleNode {
 
 func NewDeterministicMerkleTree(depth int, startIndex int) *MerkleTree {
 	numLeaves := int(math.Pow(2, float64(depth)))
-	leaves := make([]*big.Int, numLeaves)
-
-	for i := 0; i < numLeaves; i++ {
-		hashedLeaf, _ := poseidon.Hash([]*big.Int{big.NewInt(int64(i + startIndex))})
-		leaves[i] = hashedLeaf
+	var numBranches int
+	if depth > 6 {
+		numBranches = int(math.Pow(2, float64(int64(depth-6)))) // Assuming 64 branches
+	} else {
+		numBranches = 1
 	}
 
-	return NewMerkleTreeWithLeaves(leaves)
+	branchRoots := make([]*big.Int, 0, numBranches)
+
+	for i := 0; i < numBranches; i++ {
+		// For each branch, generate the leaves and build the Merkle tree
+		branchLeaves := make([]*big.Int, 0, numLeaves/numBranches)
+		for j := 0; j < numLeaves/numBranches; j++ {
+			leaf, _ := poseidon.Hash([]*big.Int{big.NewInt(int64((i * numLeaves / numBranches) + j + startIndex))})
+			branchLeaves = append(branchLeaves, leaf)
+		}
+
+		branch := NewMerkleTreeWithLeaves(branchLeaves)
+		branchRoots = append(branchRoots, branch.Root.Data)
+	}
+
+	return NewMerkleTreeWithLeaves(branchRoots)
 }
 
 func NewMerkleTreeWithLeaves(leaves []*big.Int) *MerkleTree {
